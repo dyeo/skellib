@@ -1,0 +1,98 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "extensions": {},
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "debug",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${workspaceFolder}/out/${input:buildConfig}/${workspaceFolderBasename}.exe",
+                "args": [],
+                "stopAtEntry": false,
+                "cwd": "${workspaceFolder}",
+                "environment": [],
+                "externalConsole": false,
+                "MIMode": "gdb",
+                "miDebuggerPath": "gdb",
+                "setupCommands": [
+                    {
+                        "description": "Enable pretty-printing for gdb",
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true
+                    }
+                ],
+                "preLaunchTask": "build",
+                "logging": {
+                    "trace": false,
+                    "traceResponse": false,
+                    "engineLogging": false
+                }
+            }
+        ],
+        "compounds": [],
+        "inputs": [
+          {
+            "id": "buildConfig",
+            "description": "Release type",
+            "type": "pickString",
+            "options": [
+                "Debug",
+                "Release"
+            ],
+            "default": "Debug"
+          }
+        ]
+    },
+    "settings": {
+        "files.associations": {
+            "*.h": "c",
+            "*.c": "c",
+            "*.sh": "bash",
+        },
+        "C_Cpp.default.includePath": [
+            "${workspaceFolder}/include/"
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "type": "shell",
+                "label": "build",
+                "command": "sh",
+                "args": [
+                    "build.sh",
+                    "${workspaceFolderBasename}",
+                    "${input:buildConfig}",
+                    // TODO: ADD YOUR FILES HERE
+                    "main.c",
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                },
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                }
+            }
+        ],
+        "inputs": [
+          {
+            "id": "buildConfig",
+            "description": "Release type",
+            "type": "pickString",
+            "options": [
+                "Debug",
+                "Release"
+            ],
+            "default": "Debug"
+          }
+        ]
+    }
+}
